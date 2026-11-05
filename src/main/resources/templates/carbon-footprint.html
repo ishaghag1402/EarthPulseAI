@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carbon Footprint | EarthPulse AI</title>
+    <th:block th:replace="~{fragments/head :: head}"/>
+    <link rel="stylesheet" th:href="@{/css/carbon-footprint.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<main class="wrap carbon-main">
+
+    <div class="carbon-heading">
+        <span class="eyebrow">EARTHPULSE / SUSTAINABILITY</span>
+        <h1>Carbon Footprint Calculator 🌱</h1>
+        <p>
+            Estimate your monthly carbon emissions and discover
+            simple ways to reduce your environmental impact.
+        </p>
+    </div>
+
+    <div class="carbon-layout">
+
+        <section class="carbon-panel">
+
+            <h2>Your monthly usage</h2>
+            <p class="carbon-description">
+                Enter your approximate monthly consumption.
+            </p>
+
+            <form id="carbonForm">
+
+                <div class="carbon-field">
+                    <label for="electricity">Electricity consumption (kWh)</label>
+                    <input type="number" id="electricity"
+                           min="0" step="any" value="100" required>
+                </div>
+
+                <div class="carbon-field">
+                    <label for="petrol">Petrol consumption (litres)</label>
+                    <input type="number" id="petrol"
+                           min="0" step="any" value="10" required>
+                </div>
+
+                <div class="carbon-field">
+                    <label for="diesel">Diesel consumption (litres)</label>
+                    <input type="number" id="diesel"
+                           min="0" step="any" value="0" required>
+                </div>
+
+                <div class="carbon-field">
+                    <label for="lpg">LPG cylinders used (14.2 kg each)</label>
+                    <input type="number" id="lpg"
+                           min="0" step="any" value="1" required>
+                </div>
+
+                <div class="carbon-field">
+                    <label for="bus">Public bus travel (km)</label>
+                    <input type="number" id="bus"
+                           min="0" step="any" value="50" required>
+                </div>
+
+                <div class="carbon-buttons">
+                    <button type="submit" class="carbon-btn">
+                        Calculate Footprint →
+                    </button>
+
+                    <button type="reset" class="carbon-reset">
+                        Reset
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="carbon-result-panel">
+
+            <span class="eyebrow">YOUR MONTHLY RESULT</span>
+
+            <div class="carbon-result-icon">🌍</div>
+
+            <h2 id="carbonTotal">0.00</h2>
+
+            <p class="carbon-unit">kg CO₂e / month</p>
+
+            <div class="carbon-divider"></div>
+
+            <h3>Emission breakdown</h3>
+
+            <div class="carbon-breakdown">
+                <div>
+                    <span>Electricity</span>
+                    <b id="electricityResult">0 kg</b>
+                </div>
+
+                <div>
+                    <span>Petrol</span>
+                    <b id="petrolResult">0 kg</b>
+                </div>
+
+                <div>
+                    <span>Diesel</span>
+                    <b id="dieselResult">0 kg</b>
+                </div>
+
+                <div>
+                    <span>LPG</span>
+                    <b id="lpgResult">0 kg</b>
+                </div>
+
+                <div>
+                    <span>Public transport</span>
+                    <b id="busResult">0 kg</b>
+                </div>
+            </div>
+
+            <p id="carbonMessage" class="carbon-message">
+                Enter your monthly usage and calculate your result.
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <section class="carbon-tips">
+
+        <span class="eyebrow">GO GREEN / TAKE ACTION</span>
+
+        <h2>Simple ways to reduce your footprint</h2>
+
+        <div class="carbon-tip-grid">
+
+            <div class="carbon-tip">
+                <span>💡</span>
+                <h3>Save Electricity</h3>
+                <p>Switch off unused lights and appliances.</p>
+            </div>
+
+            <div class="carbon-tip">
+                <span>🚌</span>
+                <h3>Use Public Transport</h3>
+                <p>Prefer buses and shared transport when practical.</p>
+            </div>
+
+            <div class="carbon-tip">
+                <span>☀️</span>
+                <h3>Renewable Energy</h3>
+                <p>Explore solar energy wherever possible.</p>
+            </div>
+
+            <div class="carbon-tip">
+                <span>♻️</span>
+                <h3>Reduce Waste</h3>
+                <p>Reuse materials and recycle suitable waste.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <p class="carbon-disclaimer">
+        Note: This is an educational estimate using simplified emission
+        factors. Actual emissions vary by electricity source, fuel,
+        vehicle, transport occupancy and location. This is not a
+        verified carbon audit.
+    </p>
+
+</main>
+
+<footer class="footer wrap">
+    <span>EarthPulse AI</span>
+</footer>
+
+<script th:src="@{/js/carbon-footprint.js}"></script>
+
+</body>
+</html>

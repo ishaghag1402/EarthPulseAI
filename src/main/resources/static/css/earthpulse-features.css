@@ -1,0 +1,181 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f8f5;
+    color: #203b2e;
+}
+
+.ep-header {
+    background: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 15px rgba(0,0,0,.06);
+}
+
+.ep-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #16845b;
+}
+
+.ep-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.ep-nav a {
+    text-decoration: none;
+    color: #426052;
+    font-weight: 600;
+}
+
+.ep-nav a:hover {
+    color: #16845b;
+}
+
+.ep-container {
+    max-width: 1100px;
+    margin: 55px auto;
+    padding: 0 22px;
+}
+
+.status-pill {
+    display: inline-block;
+    background: #dff5e8;
+    color: #16845b;
+    padding: 9px 15px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ep-title {
+    font-size: 36px;
+    margin: 22px 0 12px;
+    color: #174c36;
+}
+
+.ep-subtitle {
+    color: #718078;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.ep-card {
+    background: white;
+    border: 1px solid #e5eee8;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.04);
+}
+
+.ep-button {
+    background: #16845b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ep-button:hover {
+    background: #106b49;
+}
+
+.ep-button.secondary {
+    background: #e6f2eb;
+    color: #16845b;
+}
+
+.ep-input {
+    padding: 13px;
+    border: 1px solid #dce8df;
+    border-radius: 9px;
+    outline: none;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.ep-input:focus {
+    border-color: #16845b;
+}
+
+.chat-window {
+    min-height: 300px;
+    max-height: 450px;
+    overflow-y: auto;
+    background: #f6faf7;
+    border-radius: 13px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.chat-message {
+    padding: 14px 18px;
+    border-radius: 13px;
+    margin-bottom: 14px;
+    max-width: 80%;
+    line-height: 1.6;
+}
+
+.bot-message {
+    background: #e3f4e9;
+    color: #24533a;
+}
+
+.user-message {
+    background: #16845b;
+    color: white;
+    margin-left: auto;
+}
+
+#chatForm {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#chatForm .ep-input {
+    flex: 1;
+    min-width: 180px;
+}
+
+#rainMap, #harvestMap {
+    height: 420px;
+    width: 100%;
+    border-radius: 14px;
+    z-index: 1;
+}
+
+.ep-footer {
+    text-align: center;
+    padding: 25px;
+    color: #718078;
+}
+
+@media(max-width: 650px) {
+    .ep-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .ep-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .ep-title {
+        font-size: 27px;
+    }
+}

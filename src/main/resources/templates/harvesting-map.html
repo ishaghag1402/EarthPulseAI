@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EarthPulse AI | Harvesting Map</title>
+
+    <link rel="stylesheet" href="/css/earthpulse-features.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<header class="ep-header">
+    <div class="ep-brand">✳ earthpulseai</div>
+    <nav class="ep-nav">
+        <a href="/features">Features</a>
+        <a href="/rainfall-map">Rainfall Map</a>
+        <a href="/assistant">AI Assistant</a>
+    </nav>
+</header>
+
+<main class="ep-container">
+    <h1 class="ep-title">💧 Rainwater Harvesting Explorer</h1>
+
+    <p class="ep-subtitle">
+        Explore possible harvesting locations and understand the factors
+        that influence rainwater collection.
+    </p>
+
+    <div class="ep-card">
+        <button id="harvestLocate" class="ep-button">
+            ⌖ Use my location
+        </button>
+
+        <p id="harvestStatus" class="ep-subtitle">
+            Select a location to explore.
+        </p>
+
+        <div id="harvestMap"></div>
+    </div>
+
+    <div class="ep-grid">
+        <div class="ep-card">
+            <h3>🏠 Rooftop collection</h3>
+            <p>
+                Rooftops with suitable gutters and storage can collect
+                rainwater. Roof material and water quality must be checked.
+            </p>
+        </div>
+
+        <div class="ep-card">
+            <h3>🌱 Ground recharge</h3>
+            <p>
+                Recharge structures may be considered after checking soil,
+                groundwater conditions and local permissions.
+            </p>
+        </div>
+
+        <div class="ep-card">
+            <h3>📍 Site assessment</h3>
+            <p>
+                A proper site assessment should include slope, soil
+                permeability, drainage and contamination risks.
+            </p>
+        </div>
+    </div>
+
+    <div class="ep-card" style="margin-top:18px">
+        <h3>Selected location</h3>
+        <p id="harvestCoordinates">No location selected.</p>
+        <p>
+            Map markers are exploratory points only. They do not certify
+            a location as suitable for construction.
+        </p>
+    </div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/harvesting-map.js"></script>
+
+</body>
+</html>

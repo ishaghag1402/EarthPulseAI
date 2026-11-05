@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EarthPulse AI | Rainfall Map</title>
+
+    <link rel="stylesheet" href="/css/earthpulse-features.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<header class="ep-header">
+    <div class="ep-brand">✳ earthpulseai</div>
+    <nav class="ep-nav">
+        <a href="/features">Features</a>
+        <a href="/assistant">AI Assistant</a>
+        <a href="/harvesting-map">Harvesting</a>
+    </nav>
+</header>
+
+<main class="ep-container">
+    <h1 class="ep-title">🌧️ Rainfall Intelligence Map</h1>
+    <p class="ep-subtitle">
+        Select a location to view forecast rainfall and an indicative risk estimate.
+    </p>
+
+    <div class="ep-card">
+        <button class="ep-button" id="locateButton">
+            ⌖ Use my current location
+        </button>
+
+        <input id="latitude" class="ep-input"
+               type="number" step="any" placeholder="Latitude">
+
+        <input id="longitude" class="ep-input"
+               type="number" step="any" placeholder="Longitude">
+
+        <button class="ep-button secondary" id="loadRain">
+            Check rainfall
+        </button>
+
+        <p id="locationStatus" class="ep-subtitle" aria-live="polite">
+            Location is accessed only after you press the location button.
+        </p>
+    </div>
+
+    <br>
+
+    <div class="ep-card">
+        <div id="rainMap"></div>
+    </div>
+
+    <div class="ep-grid">
+        <div class="ep-card">
+            <h3>Forecast rainfall</h3>
+            <h2 id="rainValue">-- mm</h2>
+            <p id="rainPeriod">Next 12 hours</p>
+        </div>
+
+        <div class="ep-card">
+            <h3>Indicative rainfall risk</h3>
+            <h2 id="riskValue">Not checked</h2>
+            <p id="riskDescription">Check a location to see an estimate.</p>
+        </div>
+    </div>
+
+    <div class="ep-card" style="margin-top:18px">
+        <h3>Precautionary guidance</h3>
+        <p id="guidance">
+            Follow official local weather and disaster-management alerts.
+        </p>
+    </div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/rainfall-map.js"></script>
+<script src="/js/emergency-alerts.js"></script>
+
+</body>
+</html>

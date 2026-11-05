@@ -1,0 +1,483 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EarthPulse AI | Admin Control Center</title>
+  <th:block th:replace="~{fragments/head :: head}"/>
+  <link rel="stylesheet" href="/css/admin-dashboard.css">
+</head>
+<body class="admin-page">
+
+<aside class="admin-sidebar">
+  <a class="admin-brand" href="/admin">
+    <span>🌍</span><b>EarthPulse AI</b>
+    <small>ADMIN CONTROL CENTER</small>
+  </a>
+
+  <div class="side-caption">WORKSPACE</div>
+
+  <nav>
+    <a class="active" href="#overview">⌂ <span>Overview</span></a>
+    <a href="#users">♙ <span>User Management</span><b th:text="${userCount}">0</b></a>
+    <a href="#logins">◷ <span>Login Activity</span></a>
+    <a href="#community">▤ <span>Community Reports</span><b th:text="${communityReportCount}">0</b></a>
+    <a href="#wastewatch">♻ <span>WasteWatch Reports</span><b th:text="${wasteReportCount}">0</b></a>
+    <a href="#alerts">♢ <span>Alerts & Notifications</span><b class="alert-count" th:text="${pendingCommunityCount + pendingWasteCount}">0</b></a>
+  </nav>
+
+  <div class="sidebar-note">
+    <span>🌱</span><b>Every report matters.</b>
+    <small>Review, respond and make a difference.</small>
+  </div>
+</aside>
+
+<main class="admin-main">
+
+  <header class="admin-topbar" id="overview">
+    <div>
+      <span class="admin-kicker">EARTHPULSE AI / CONTROL CENTER</span>
+      <h1>Admin Dashboard</h1>
+      <p>Welcome back, <strong th:text="${adminName}">Admin</strong>.</p>
+    </div>
+
+    <div class="admin-top-actions">
+      <label class="language-control">
+        ◎
+        <select id="siteLanguage" aria-label="Language">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="mr">मराठी</option>
+        </select>
+      </label>
+
+      <span class="admin-avatar">A</span>
+
+      <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button class="logout-btn" type="submit">Logout ↗</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="admin-flash" th:if="${success}" th:text="${success}"></div>
+  <div class="admin-flash admin-flash-error" th:if="${error}" th:text="${error}"></div>
+
+  <section class="admin-hero">
+    <div>
+      <span class="hero-leaf">🌿</span>
+      <div>
+        <small>SMART SOLUTIONS FOR A SUSTAINABLE FUTURE</small>
+        <h2>EarthPulse AI</h2>
+        <p>Monitor your community. Review reports. Take action.</p>
+      </div>
+    </div>
+    <div class="hero-globe">🌍</div>
+  </section>
+
+  <section class="admin-metrics">
+    <a class="admin-metric mint" href="#users">
+      <span class="metric-icon">♙</span>
+      <div><strong th:text="${userCount}">0</strong><small>Total Users</small></div>
+      <b>View users ↗</b>
+    </a>
+
+    <a class="admin-metric blue" href="#community">
+      <span class="metric-icon">▤</span>
+      <div><strong th:text="${communityReportCount}">0</strong><small>Community Reports</small></div>
+      <b>Review ↗</b>
+    </a>
+
+    <a class="admin-metric peach" href="#wastewatch">
+      <span class="metric-icon">♻</span>
+      <div><strong th:text="${wasteReportCount}">0</strong><small>WasteWatch Reports</small></div>
+      <b>Review ↗</b>
+    </a>
+
+    <a class="admin-metric lilac" href="#alerts">
+      <span class="metric-icon">♢</span>
+      <div><strong th:text="${pendingCommunityCount + pendingWasteCount}">0</strong><small>Open Alerts</small></div>
+      <b>Check alerts ↗</b>
+    </a>
+  </section>
+
+  <section class="admin-section-grid">
+
+    <article class="admin-card overview-card">
+      <div class="section-heading">
+        <div>
+          <span class="admin-kicker">DATABASE SNAPSHOT</span>
+          <h2>Platform Overview</h2>
+          <p>Live totals from the connected application database.</p>
+        </div>
+        <span class="live-pill">● LIVE DATABASE</span>
+      </div>
+
+      <div class="overview-stats">
+        <div><span>Registered users</span><b th:text="${userCount}">0</b></div>
+        <div><span>Community reports</span><b th:text="${communityReportCount}">0</b></div>
+        <div><span>WasteWatch reports</span><b th:text="${wasteReportCount}">0</b></div>
+        <div><span>Awaiting review</span><b th:text="${pendingCommunityCount + pendingWasteCount}">0</b></div>
+      </div>
+    </article>
+
+    <article class="admin-card" id="alerts">
+      <div class="section-heading">
+        <div>
+          <span class="admin-kicker">ACTION REQUIRED</span>
+          <h2>Alerts & Notifications</h2>
+          <p>Items that may need administrator attention.</p>
+        </div>
+        <span class="alert-bell">♢</span>
+      </div>
+
+      <div class="notice-row" th:if="${pendingCommunityCount > 0}">
+        <span class="notice-icon">▤</span>
+        <div>
+          <b th:text="${pendingCommunityCount + ' community report(s) need review'}">Community reports need review</b>
+          <small>New or under-review submissions</small>
+        </div>
+        <a href="#community">Open →</a>
+      </div>
+
+      <div class="notice-row" th:if="${pendingWasteCount > 0}">
+        <span class="notice-icon">♻</span>
+        <div>
+          <b th:text="${pendingWasteCount + ' WasteWatch report(s) need review'}">Waste reports need review</b>
+          <small>Pending or under-review submissions</small>
+        </div>
+        <a href="#wastewatch">Open →</a>
+      </div>
+
+      <div class="empty-notice" th:if="${pendingCommunityCount == 0 and pendingWasteCount == 0}">
+        ✓ All submitted reports are currently marked reviewed or resolved.
+      </div>
+    </article>
+
+  </section>
+
+  <!-- USER MANAGEMENT -->
+  <section class="admin-card admin-table-card" id="users">
+    <div class="section-heading">
+      <div>
+        <span class="admin-kicker">ACCOUNT DIRECTORY</span>
+        <h2>User Management</h2>
+        <p>Registered accounts, roles and last recorded sign-in.</p>
+      </div>
+      <span class="count-chip" th:text="${userCount + ' accounts'}">0 accounts</span>
+    </div>
+
+    <input class="admin-search" data-table-search="usersTable"
+           placeholder="Search users by name or email..."
+           aria-label="Search users">
+
+    <div class="table-wrap">
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th>User</th><th>Email</th><th>Role</th>
+            <th>Registered</th><th>Last sign-in</th><th>Login IP</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="u:${users}">
+            <td><b th:text="${u.fullName}">User</b></td>
+            <td th:text="${u.email}">email</td>
+            <td><span class="role-chip" th:text="${u.role}">USER</span></td>
+            <td th:text="${u.createdAt != null ? u.createdAt : '—'}">—</td>
+            <td th:text="${u.lastLoginAt != null ? u.lastLoginAt : 'Never signed in'}">—</td>
+            <td th:text="${u.lastLoginIp != null ? u.lastLoginIp : 'Not recorded'}">—</td>
+          </tr>
+
+          <tr th:if="${#lists.isEmpty(users)}">
+            <td colspan="6">No registered accounts yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="privacy-note">
+      Login IP is technical connection metadata, not a verified street address or exact GPS location.
+    </p>
+  </section>
+
+  <!-- LOGIN ACTIVITY -->
+  <section class="admin-card admin-table-card" id="logins">
+    <div class="section-heading">
+      <div>
+        <span class="admin-kicker">RECENT SIGN-INS</span>
+        <h2>Login Activity</h2>
+        <p>Latest successful user sign-ins only. Administrator sign-ins are excluded.</p>
+      </div>
+      <span class="count-chip">Latest 30 events</span>
+    </div>
+
+    <input class="admin-search" data-table-search="loginTable"
+           placeholder="Search user login activity..."
+           aria-label="Search login activity">
+
+    <div class="table-wrap">
+      <table id="loginTable">
+        <thead>
+          <tr><th>Account</th><th>Role</th><th>Sign-in time</th><th>IP address</th></tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="event:${loginEvents}">
+            <td th:text="${event.email}">email</td>
+            <td><span class="role-chip" th:text="${event.role}">USER</span></td>
+            <td th:text="${event.loggedInAt}">—</td>
+            <td th:text="${event.ipAddress != null ? event.ipAddress : 'Not recorded'}">—</td>
+          </tr>
+
+          <tr th:if="${#lists.isEmpty(loginEvents)}">
+            <td colspan="4">No login events recorded yet. New successful sign-ins will appear here.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMMUNITY REPORTS -->
+  <section class="admin-card admin-table-card" id="community">
+    <div class="section-heading">
+      <div>
+        <span class="admin-kicker">CITIZEN SUBMISSIONS</span>
+        <h2>Community Report Review</h2>
+        <p>Who submitted a report, what they reported and where it happened.</p>
+      </div>
+      <span class="count-chip" th:text="${communityReportCount + ' reports'}">0 reports</span>
+    </div>
+
+    <input class="admin-search" data-table-search="communityTable"
+           placeholder="Search community reports..."
+           aria-label="Search community reports">
+
+    <div class="table-wrap">
+      <table id="communityTable">
+        <thead>
+          <tr>
+            <th>Photo</th><th>Report</th><th>Category & description</th>
+            <th>Reporter</th><th>Reported location</th><th>Submitted</th><th>Status / action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="r:${reports}">
+            <td>
+              <a th:if="${r.imageName != null}"
+                 th:href="@{'/uploads/' + ${r.imageName}}"
+                 target="_blank" rel="noopener">
+                <img th:src="@{'/uploads/' + ${r.imageName}}"
+                     alt="Community report photo"
+                     width="68" height="58" loading="lazy">
+              </a>
+              <span th:unless="${r.imageName != null}">No photo</span>
+            </td>
+
+            <td th:text="${'#' + r.id}">#1</td>
+
+            <td>
+              <b th:text="${r.category}">Category</b>
+              <small class="cell-description" th:text="${r.description}">Description</small>
+            </td>
+
+            <td th:text="${r.reporterEmail}">reporter</td>
+
+            <td>
+              <a class="map-link"
+                 th:if="${r.latitude != null and r.longitude != null}"
+                 th:href="@{'https://www.google.com/maps?q=' + ${r.latitude} + ',' + ${r.longitude}}"
+                 target="_blank" rel="noopener">Open report pin ↗</a>
+
+              <span th:unless="${r.latitude != null and r.longitude != null}">Not shared</span>
+
+              <small class="cell-description"
+                     th:if="${r.latitude != null and r.longitude != null}"
+                     th:text="${r.latitude + ', ' + r.longitude}"></small>
+            </td>
+
+            <td th:text="${r.createdAt}">—</td>
+
+            <td>
+              <form th:action="@{'/admin/reports/'+${r.id}+'/status'}"
+                    method="post" class="inline-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <select name="status">
+                  <option value="SUBMITTED" th:selected="${r.status == 'SUBMITTED'}">Submitted</option>
+                  <option value="UNDER_REVIEW" th:selected="${r.status == 'UNDER_REVIEW'}">Under review</option>
+                  <option value="RESOLVED" th:selected="${r.status == 'RESOLVED'}">Resolved</option>
+                  <option value="REJECTED" th:selected="${r.status == 'REJECTED'}">Rejected</option>
+                </select>
+                <button class="admin-save">Save</button>
+              </form>
+
+              <form th:action="@{'/admin/community-reports/'+${r.id}+'/delete'}"
+                    method="post"
+                    onsubmit="return confirm('Delete this community report permanently?')">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button class="admin-save admin-delete" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+
+          <tr th:if="${#lists.isEmpty(reports)}">
+            <td colspan="7">No community reports submitted yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- WASTEWATCH REPORTS -->
+  <section class="admin-card admin-table-card" id="wastewatch">
+    <div class="section-heading">
+      <div>
+        <span class="admin-kicker">WASTEWATCH SUBMISSIONS</span>
+        <h2>Waste Report Review</h2>
+        <p>Reporter identity, photo, address and saved map coordinates.</p>
+      </div>
+      <span class="count-chip" th:text="${wasteReportCount + ' reports'}">0 reports</span>
+    </div>
+
+    <input class="admin-search" data-table-search="wasteTable"
+           placeholder="Search WasteWatch reports..."
+           aria-label="Search WasteWatch reports">
+
+    <div class="table-wrap">
+      <table id="wasteTable">
+        <thead>
+          <tr>
+            <th>Photo</th><th>Report</th><th>Reporter</th>
+            <th>Category & description</th><th>Reported location</th><th>Status / action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="w:${wasteReports}">
+
+            <!-- PHOTO: SHOW IMAGE OR NO PHOTO AVAILABLE -->
+            <td style="text-align:center; vertical-align:middle;">
+
+              <a th:if="${w.imagePath != null and !#strings.isEmpty(w.imagePath)}"
+                 th:href="${w.imagePath}"
+                 target="_blank"
+                 rel="noopener"
+                 onerror="this.style.display='none';">
+
+                <img th:src="${w.imagePath}"
+                     alt="Waste report photo"
+                     width="90"
+                     height="75"
+                     loading="lazy"
+                     style="width:90px; height:75px; object-fit:cover; border-radius:8px; border:1px solid #ddd; cursor:pointer;"
+                     onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='inline';">
+              </a>
+
+              <span
+                class="no-photo-message"
+                th:style="${w.imagePath == null or #strings.isEmpty(w.imagePath)} ? 'display:inline; color:#888; font-size:13px; font-weight:500;' : 'display:none; color:#888; font-size:13px; font-weight:500;'">
+                No Photo Available
+              </span>
+
+            </td>
+
+            <td th:text="${'#' + w.id}">#1</td>
+
+            <td th:text="${w.reporterEmail != null ? w.reporterEmail : (w.reporterName != null ? w.reporterName : 'Not recorded')}">
+              Reporter
+            </td>
+
+            <td>
+              <b th:text="${w.category}">Category</b>
+              <small class="cell-description" th:text="${w.description}">Description</small>
+            </td>
+
+            <td>
+              <span th:text="${w.address != null and !w.address.isBlank() ? w.address : 'Address not shared'}">
+                Address
+              </span>
+
+              <a class="map-link"
+                 th:if="${w.latitude != null and w.longitude != null}"
+                 th:href="@{'https://www.google.com/maps?q=' + ${w.latitude} + ',' + ${w.longitude}}"
+                 target="_blank" rel="noopener">
+                Open map pin ↗
+              </a>
+
+              <small class="cell-description"
+                     th:if="${w.latitude != null and w.longitude != null}"
+                     th:text="${w.latitude + ', ' + w.longitude}"></small>
+            </td>
+
+            <td>
+              <form th:action="@{'/admin/waste-reports/'+${w.id}+'/status'}"
+                    method="post" class="inline-form">
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <select name="status">
+                  <option th:selected="${w.status == 'Pending'}">Pending</option>
+                  <option th:selected="${w.status == 'Under Review'}">Under Review</option>
+                  <option th:selected="${w.status == 'Resolved'}">Resolved</option>
+                  <option th:selected="${w.status == 'Rejected'}">Rejected</option>
+                </select>
+
+                <button class="admin-save">Save</button>
+              </form>
+
+              <form th:action="@{'/admin/waste-reports/'+${w.id}+'/delete'}"
+                    method="post"
+                    onsubmit="return confirm('Delete this WasteWatch report permanently?')">
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button class="admin-save admin-delete" type="submit">Delete</button>
+              </form>
+            </td>
+
+          </tr>
+
+          <tr th:if="${#lists.isEmpty(wasteReports)}">
+            <td colspan="6">No WasteWatch reports submitted yet.</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="admin-footer">
+    EarthPulse AI · Admin Control Center
+    <span>Monitor · Protect · Sustain</span>
+  </footer>
+
+</main>
+
+<script src="/js/language-switcher.js" defer></script>
+
+<script>
+document.querySelectorAll('[data-table-search]').forEach(input =>
+  input.addEventListener('input', () => {
+    const table = document.getElementById(input.dataset.tableSearch);
+    const query = input.value.toLowerCase().trim();
+
+    table.querySelectorAll('tbody tr').forEach(row => {
+      row.hidden = !row.innerText.toLowerCase().includes(query);
+    });
+  })
+);
+
+document.querySelectorAll('.admin-sidebar nav a[href^="#"]').forEach(link =>
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.admin-sidebar nav a')
+      .forEach(a => a.classList.remove('active'));
+
+    link.classList.add('active');
+  })
+);
+</script>
+
+</body>
+</html>

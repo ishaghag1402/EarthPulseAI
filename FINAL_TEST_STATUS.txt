@@ -1,0 +1,31 @@
+EARTHPULSE AI — ADMIN CONTROL CENTER FINAL PACKAGE
+
+Implemented:
+- Admin dashboard shows only USER-role accounts in User Management.
+- Login Activity is filtered to successful USER sign-ins only; administrator sign-ins are excluded.
+- Community Report photos are displayed from /uploads/ and can be opened in a new tab.
+- WasteWatch photos are displayed from /waste-images/ and can be opened in a new tab.
+- Community report submission now requires valid one-time GPS coordinates.
+- WasteWatch submission requires either a non-blank address or valid GPS coordinates.
+- WasteWatch form includes a local photo preview before upload.
+- Admin login includes show/hide controls for password and PIN, 6-digit PIN validation, and submit feedback.
+- Admin dashboard includes client-side search for users, login activity, community reports and WasteWatch reports.
+- Admin can update report statuses and delete reports; delete actions ask for confirmation.
+- Admin pages and actions remain protected by the existing ROLE_ADMIN + PIN verification rule.
+
+Validation performed in the packaging environment:
+- JavaScript syntax checks passed for inline scripts in admin.html, admin-login.html, waste-report.html and report-form.html.
+- Project pom.xml XML parsing checked.
+- Source-level checks confirmed user-only filtering, image preview paths, location validation, login toggles and delete endpoints.
+- Full Maven build, Spring Boot startup, Thymeleaf rendering and database/browser end-to-end tests were NOT run because Maven is not installed in the packaging environment. Therefore this ZIP is source-checked, but cannot honestly be certified error-free until tested on the target Windows machine.
+
+Windows setup:
+1. Install JDK 21, Maven 3.9+, and MySQL.
+2. Extract the ZIP.
+3. Open PowerShell in the EarthPulseAI_Java21 folder.
+4. Run: Set-ExecutionPolicy -Scope Process Bypass
+5. Run: ./run-windows.ps1
+6. Enter the MySQL password, admin email and admin password when prompted.
+7. Open http://localhost:8080/admin/login
+Do not publish the admin password or PIN. Change the starter PIN before any public deployment.
+

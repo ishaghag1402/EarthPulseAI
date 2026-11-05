@@ -1,0 +1,11 @@
+EarthPulse AI — repair notes
+
+This edition uses persistent local H2 by default to avoid MySQL credential failures on a fresh setup. Optional MySQL connection details are configured through environment variables; see README.md.
+
+Community EcoReports Map reads actual saved report records from the application's API. It does not show hard-coded demo pins.
+
+Air Quality Explorer retrieves modelled Open-Meteo air-quality values for the selected location and nearby grid points. If the external service fails, it displays an error state rather than placeholder readings.
+
+The shared weather toolbar has been removed from individual feature pages because it made unrelated modules repeat the same generic output. The dashboard now highlights 12 distinct modules.
+
+Important: a full Maven build and browser end-to-end test must be run on a Windows machine with JDK 21, Maven and internet access. The preparation environment does not have Maven installed.

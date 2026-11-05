@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Risk Watch | EarthPulse AI</title>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f7f5;
+            color: #20332b;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px #0000000d;
+        }
+
+        header h2 { color: #16845b; }
+
+        a {
+            text-decoration: none;
+            color: #16845b;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .intro { margin-bottom: 25px; }
+        .intro h1 { font-size: 30px; margin-bottom: 10px; }
+        .intro p { color: #718078; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #00000009;
+        }
+
+        .card h3 { margin-bottom: 14px; }
+        .value { font-size: 27px; font-weight: bold; color: #16845b; }
+        .muted { color: #78867e; font-size: 14px; margin-top: 8px; }
+
+        .risk {
+            margin-top: 22px;
+            padding: 25px;
+            border-radius: 15px;
+            background: #fff;
+        }
+
+        .risk-status {
+            display: inline-block;
+            background: #fff0d6;
+            color: #a56500;
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        button {
+            background: #16845b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .note {
+            margin-top: 20px;
+            color: #78867e;
+            font-size: 13px;
+        }
+
+        @media(max-width: 600px) {
+            header { padding: 16px; }
+            .intro h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🌿 EarthPulse AI</h2>
+    <a th:href="@{/dashboard}">← Back to Dashboard</a>
+</header>
+
+<main>
+    <section class="intro">
+        <h1>🌧️ Rainfall Risk Watch</h1>
+        <p>Monitor rainfall conditions and understand potential weather-related risks.</p>
+    </section>
+
+    <section class="grid">
+        <div class="card">
+            <h3>Rainfall Monitoring</h3>
+            <div class="value">Monitoring</div>
+            <p class="muted">Rainfall data status</p>
+        </div>
+
+        <div class="card">
+            <h3>Flood Risk</h3>
+            <div class="value">Not assessed</div>
+            <p class="muted">Live location data is not connected.</p>
+        </div>
+
+        <div class="card">
+            <h3>Weather Alerts</h3>
+            <div class="value">Demo</div>
+            <p class="muted">Sample alert section</p>
+        </div>
+    </section>
+
+    <section class="risk">
+        <h2>Risk Awareness</h2>
+        <div class="risk-status">Demo information</div>
+        <p>
+            Heavy rainfall may cause waterlogging, traffic disruption
+            and flooding in vulnerable areas.
+        </p>
+
+        <h3 style="margin-top:20px;">Safety Precautions</h3>
+        <ul style="padding-left:22px; line-height:2; margin-top:10px;">
+            <li>Follow official weather alerts.</li>
+            <li>Avoid walking or driving through floodwater.</li>
+            <li>Keep emergency contacts accessible.</li>
+            <li>Follow instructions from local authorities.</li>
+        </ul>
+
+        <button onclick="showInfo()">View Risk Information</button>
+        <p id="message" class="muted"></p>
+    </section>
+
+    <p class="note">
+        Note: This page currently displays demonstration content.
+        It does not provide live rainfall measurements or verified flood predictions.
+    </p>
+</main>
+
+<script>
+    function showInfo() {
+        document.getElementById("message").textContent =
+            "Check official weather forecasts and local authority alerts for current risk information.";
+    }
+</script>
+
+</body>
+</html>

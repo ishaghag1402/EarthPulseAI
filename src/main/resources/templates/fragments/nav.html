@@ -1,0 +1,10 @@
+<nav class="topbar" xmlns:th="http://www.thymeleaf.org" th:fragment="nav">
+ <a class="brand" href="/"><span class="brand-mark">✳</span> earthpulse<span>ai</span></a>
+ <div class="navlinks"><a href="/dashboard" data-i18n="navDashboard">Dashboard</a><a href="/twin" data-i18n="navTwin">Digital Twin</a><a href="/satellite" data-i18n="navSatellite">Satellite Lab</a><a href="/simulator" data-i18n="navSimulator">Simulator</a><a href="/reports" data-i18n="navReports">Reports</a></div>
+ <div class="nav-actions">
+  <label class="language-control" aria-label="Choose language"><span>◎</span><select id="siteLanguage" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label>
+  <a class="btn btn-ghost" href="/admin/login" title="Admin login" aria-label="Admin login">♙ Admin</a>
+  <a class="btn btn-primary" href="/register" data-i18n="registerLogin">Register / Login</a>
+ </div>
+ <script src="/js/language-switcher.js" defer></script>
+</nav>

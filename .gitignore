@@ -1,0 +1,34 @@
+
+# Java / Maven
+target/
+*.class
+*.log
+
+# IDE
+.idea/
+.settings/
+.project
+.classpath
+.vscode/
+*.iml
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+application-local.properties
+application-secret.properties
+
+# Database backups
+*.sql
+*.sql.gz
+*.dump
+*.bak
+
+# Uploaded private files
+uploads/
+waste-images/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>EarthPulse AI | Environmental Command Dashboard</title>
+  <th:block th:replace="~{fragments/head :: head}"/>
+  <link rel="stylesheet" th:href="@{/css/dashboard-features.css}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <script th:src="@{/js/earthpulse-dashboard.js}" defer></script>
+</head>
+<body class="ep-dashboard-body">
+<div class="ep-shell">
+  <aside class="ep-sidebar">
+    <a class="ep-brand" th:href="@{/dashboard}"><span class="ep-brand-mark">🌍</span><span>EarthPulse <b>AI</b><small>AI for a Greener Planet</small></span></a>
+    <div class="ep-side-label" data-i18n="workspace">WORKSPACE</div>
+    <a class="ep-side-link active" th:href="@{/dashboard}"><span>⌂</span> <span data-i18n="navDashboard">Dashboard</span></a>
+    <div class="ep-side-label" data-i18n="environmentModules">ENVIRONMENT MODULES</div>
+    <a class="ep-side-link" th:href="@{/twin}"><span>🌐</span> 3D Earth Explorer</a>
+    <a class="ep-side-link" th:href="@{/eco-twin}"><span>🏡</span> EcoTwin 360</a>
+    <a class="ep-side-link" th:href="@{/satellite}"><span>🛰️</span> Satellite Lab</a>
+    <a class="ep-side-link" th:href="@{/rainfall-map}"><span>🌧️</span> Rainfall Intelligence</a>
+    <a class="ep-side-link" th:href="@{/rainfall-risk}"><span>⚠️</span> Rainfall Risk Watch</a>
+    <a class="ep-side-link" th:href="@{/climate-risk}"><span>🌡️</span> Climate Risk</a>
+    <a class="ep-side-link" th:href="@{/harvesting-map}"><span>💧</span> Rainwater Harvesting</a>
+    <a class="ep-side-link" th:href="@{/water-intelligence}"><span>🚰</span> Water Intelligence</a>
+    <a class="ep-side-link" th:href="@{/green-cover}"><span>🌳</span> Green Cover</a>
+    <a class="ep-side-link" th:href="@{/biodiversity}"><span>🦋</span> Biodiversity</a>
+    <a class="ep-side-link" th:href="@{/waste-report}"><span>♻️</span> WasteWatch</a>
+    <a class="ep-side-link" th:href="@{/carbon-footprint}"><span>🌱</span> Carbon Footprint</a>
+    <a class="ep-side-link" th:href="@{/eco-scenario}"><span>🔮</span> Eco Scenario Studio</a>
+    <a class="ep-side-link" th:href="@{/simulator}"><span>📈</span> Sustainability Simulator</a>
+    <a class="ep-side-link" th:href="@{/environmental-insights}"><span>📊</span> Environmental Insights</a>
+    <a class="ep-side-link" th:href="@{/command-center}"><span>🧭</span> Command Center</a>
+    <a class="ep-side-link" th:href="@{/pollution-heatmap}"><span>🌫️</span> Live Pollution Heatmap</a>
+    <a class="ep-side-link" th:href="@{/deforestation-tracker}"><span>🌲</span> Deforestation Tracker</a>
+    <a class="ep-side-link" th:href="@{/flood-early-warning}"><span>🚨</span> Flood Early Warning</a>
+    <a class="ep-side-link" th:href="@{/water-quality}"><span>🧪</span> Water Quality Monitor</a>
+    <a class="ep-side-link" th:href="@{/biodiversity-explorer}"><span>🦋</span> Biodiversity Explorer</a>
+    <a class="ep-side-link" th:href="@{/renewable-energy}"><span>☀️</span> Renewable Energy Tracker</a>
+    <a class="ep-side-link" th:href="@{/green-score}"><span>🏅</span> Green Score & Rewards</a>
+    <a class="ep-side-link" th:href="@{/community-map}"><span>📍</span> Community Eco Reports Map</a>
+    <div class="ep-side-label">AI & COMMUNITY</div>
+    <a class="ep-side-link" th:href="@{/assistant}"><span>✨</span> AI Area Assessment</a>
+    <a class="ep-side-link" th:href="@{/reports/new}"><span>＋</span> Submit EcoReport</a>
+    <a class="ep-side-link" th:href="@{/your-activity}"><span>▤</span> Your Activity</a>
+    <div class="ep-sidebar-bottom"><span class="ep-leaf">🌿</span><b>Together for a sustainable future</b><small>EarthPulse AI</small>
+      <form th:action="@{/logout}" method="post"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"><button class="ep-logout">Sign out ↗</button></form>
+    </div>
+  </aside>
+
+  <main class="ep-main">
+    <header class="ep-topbar">
+      <div><span class="ep-mobile-brand">🌍 EarthPulse AI</span><span class="ep-breadcrumb"><span data-i18n="workspace">Workspace</span> <b>/ <span data-i18n="navDashboard">Dashboard</span></b></span></div>
+      <div class="ep-top-actions"><label class="language-control">◎ <select id="siteLanguage" aria-label="Choose language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></label><span class="ep-date" id="epToday">Environmental overview</span><a class="ep-top-report" th:href="@{/reports/new}">＋ New EcoReport</a><span class="ep-avatar" th:text="${#strings.substring(user.fullName,0,1)}">E</span></div>
+    </header>
+
+    <section class="ep-welcome">
+      <div class="ep-welcome-copy"><span class="ep-kicker" data-i18n="yourCommandCentre">YOUR ENVIRONMENTAL COMMAND CENTRE</span>
+        <h1>Good to see you, <em th:text="${user.fullName}">Explorer</em>.</h1>
+        <p data-i18n="dashboardIntro">Explore environmental data, monitor local observations and discover sustainable actions.</p>
+        <div class="ep-welcome-actions"><a th:href="@{/command-center}">Explore Command Center <b>→</b></a><span>🌱 Smarter insights. Greener tomorrow.</span></div>
+      </div>
+      <div class="ep-welcome-art"><div class="ep-orbit ep-orbit-one"></div><div class="ep-orbit ep-orbit-two"></div><div class="ep-planet">🌍</div><span class="ep-float-leaf leaf-one">🍃</span><span class="ep-float-leaf leaf-two">🌿</span></div>
+    </section>
+
+    <section class="ep-metrics" aria-label="Workspace summary">
+      <article class="ep-metric metric-green"><div class="ep-metric-top"><span data-i18n="myEcoReports">MY ECO REPORTS</span><i>▤</i></div><strong th:text="${reportCount}">0</strong><small data-i18n="reportsSubmitted">Reports submitted by you</small><div class="ep-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+      <article class="ep-metric metric-blue"><div class="ep-metric-top"><span data-i18n="environmentModules">ENVIRONMENT MODULES</span><i>🌐</i></div><strong>12</strong><small data-i18n="dedicatedTools">Dedicated tools and workspaces</small><div class="ep-metric-foot"><span>Explore individually</span><b>↗</b></div></article>
+      <article class="ep-metric metric-violet"><div class="ep-metric-top"><span>AI ASSISTANCE</span><i>✦</i></div><strong>1 workspace</strong><small>Eco Assistant + area assessment</small><div class="ep-metric-foot"><span>Available in workspace</span><b>↗</b></div></article>
+      <article class="ep-metric metric-amber"><div class="ep-metric-top"><span>YOUR LOCATION</span><i>⌖</i></div><strong>Opt-in</strong><small>Location shared only by choice</small><div class="ep-metric-foot"><span>Privacy-aware workspace</span><b>✓</b></div></article>
+    </section>
+
+    <section class="ep-analytics-section">
+      <div class="ep-section-title"><div><span class="ep-kicker">VISUAL OVERVIEW</span><h2 data-i18n="environmentalAnalytics">Environmental analytics</h2><p>Illustrative sample visualisations for the dashboard prototype.</p></div><a th:href="@{/environmental-insights}">Open full analytics →</a></div>
+      <div class="ep-chart-grid">
+        <article class="ep-chart-card ep-chart-pie"><div class="ep-card-heading"><div><h3>Environmental focus</h3><small>Sample distribution · demo data</small></div><span class="ep-chart-menu">•••</span></div><div class="ep-pie-wrap"><div class="ep-canvas-wrap"><canvas id="environmentPieChart" aria-label="Doughnut chart showing sample environmental focus distribution"></canvas></div><div class="ep-chart-legend"><div><i class="dot-air"></i><span>Air quality</span><b>28%</b></div><div><i class="dot-water"></i><span>Water</span><b>24%</b></div><div><i class="dot-green"></i><span>Green cover</span><b>22%</b></div><div><i class="dot-waste"></i><span>Waste</span><b>16%</b></div><div><i class="dot-climate"></i><span>Climate</span><b>10%</b></div></div></div></article>
+        <article class="ep-chart-card ep-chart-line"><div class="ep-card-heading"><div><h3>Climate trend overview</h3><small>Illustrative weekly index · not live readings</small></div><span class="ep-chart-tag">7 days</span></div><div class="ep-chart-canvas"><canvas id="climateLineChart" aria-label="Line chart of illustrative climate trend indices"></canvas></div></article>
+        <article class="ep-chart-card ep-chart-bar"><div class="ep-card-heading"><div><h3>Module activity</h3><small>Example activity values · demo data</small></div><span class="ep-chart-tag">Overview</span></div><div class="ep-chart-canvas"><canvas id="activityBarChart" aria-label="Bar chart of sample module activity"></canvas></div></article>
+      </div>
+    </section>
+
+    <section class="ep-modules-section" id="modules">
+      <div class="ep-section-title"><div><span class="ep-kicker">EXPLORE EARTHPULSE</span><h2 data-i18n="allFeatures">All features & modules</h2><p>Every feature opens in its own dedicated page. Choose a module to get started.</p></div><span class="ep-module-count">25 MODULES</span></div>
+      <div class="ep-module-grid">
+        <a class="ep-module-card tone-orange" th:href="@{/pollution-heatmap}"><span class="ep-module-icon">🌫️</span><span class="ep-module-number">01 / AIR QUALITY</span><h3>Air Quality Explorer</h3><p>Search an area and compare modelled AQI and pollutant levels.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-blue" th:href="@{/climate-risk}"><span class="ep-module-icon">🌦️</span><span class="ep-module-number">02 / CLIMATE</span><h3>Climate & Weather</h3><p>Review local weather, rainfall context and climate indicators.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-cyan" th:href="@{/flood-early-warning}"><span class="ep-module-icon">🌊</span><span class="ep-module-number">03 / PREPAREDNESS</span><h3>Flood Preparedness</h3><p>Explore rainfall scenarios, drainage factors and safety guidance.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-blue" th:href="@{/water-quality}"><span class="ep-module-icon">🧪</span><span class="ep-module-number">04 / WATER</span><h3>Water Quality Lab</h3><p>Enter pH, turbidity and dissolved-oxygen sample readings.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-cyan" th:href="@{/harvesting-map}"><span class="ep-module-icon">💧</span><span class="ep-module-number">05 / CONSERVATION</span><h3>Rainwater Harvesting</h3><p>Estimate rainwater collection potential from roof and rainfall inputs.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-green" th:href="@{/deforestation-tracker}"><span class="ep-module-icon">🌳</span><span class="ep-module-number">06 / LAND & FORESTS</span><h3>Green Cover Monitor</h3><p>Explore vegetation monitoring and satellite comparison workflows.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-mint" th:href="@{/biodiversity-explorer}"><span class="ep-module-icon">🦋</span><span class="ep-module-number">07 / BIODIVERSITY</span><h3>Biodiversity Explorer</h3><p>Explore species, habitats and community observation records.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-purple" th:href="@{/community-map}"><span class="ep-module-icon">📍</span><span class="ep-module-number">08 / COMMUNITY</span><h3>Community EcoReports</h3><p>Submit and map real community environmental observations.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-green" th:href="@{/carbon-footprint}"><span class="ep-module-icon">🌱</span><span class="ep-module-number">09 / FOOTPRINT</span><h3>Carbon Footprint</h3><p>Estimate emissions from travel, energy and daily activities.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-yellow" th:href="@{/renewable-energy}"><span class="ep-module-icon">☀️</span><span class="ep-module-number">10 / CLEAN ENERGY</span><h3>Solar Energy Planner</h3><p>Estimate solar generation using capacity and sunlight assumptions.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-purple" th:href="@{/eco-scenario}"><span class="ep-module-icon">🔬</span><span class="ep-module-number">11 / SIMULATION</span><h3>Eco Scenario Studio</h3><p>Compare how changing assumptions affects sustainability outcomes.</p><b>Open module <i>↗</i></b></a>
+        <a class="ep-module-card tone-pink" th:href="@{/assistant}"><span class="ep-module-icon">✨</span><span class="ep-module-number">12 / AI ASSISTANT</span><h3>Environmental AI Assistant</h3><p>Generate a structured assessment from your selected area and observations.</p><b>Open module <i>↗</i></b></a>
+      </div>
+    </section>
+
+    <section class="ep-bottom-grid">
+      <article class="ep-reports-card"><div class="ep-card-heading"><div><span class="ep-kicker">YOUR ACTIVITY</span><h3 data-i18n="recentEcoReports">Recent EcoReports</h3></div><a th:href="@{/reports}">View all →</a></div>
+        <div th:if="${#lists.isEmpty(reports)}" class="ep-empty"><span>📝</span><b>No reports submitted yet</b><small>Your submitted observations will appear here.</small><a th:href="@{/reports/new}">Create your first report →</a></div>
+        <div class="ep-report-row" th:each="r, stat : ${reports}" th:if="${stat.index < 4}"><span class="ep-report-symbol">🌿</span><div><b th:text="${r.category}">Environment</b><small th:text="${r.status}">SUBMITTED</small></div><span class="ep-report-arrow">↗</span></div>
+      </article>
+      <article class="ep-note-card"><span class="ep-note-icon">ⓘ</span><h3>About dashboard data</h3><p>Charts on this overview use illustrative sample values to demonstrate the dashboard layout. Individual modules may show live API data, user-entered calculations or demonstration content as labelled on each page.</p><a th:href="@{/environmental-insights}">Explore environmental insights →</a></article>
+    </section>
+    <footer class="ep-footer"><span>© EarthPulse AI</span><span>Built for a greener tomorrow 🌿</span></footer>
+  </main>
+</div>
+<script src="/js/language-switcher.js" defer></script></body>
+</html>

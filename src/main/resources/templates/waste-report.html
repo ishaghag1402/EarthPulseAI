@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WasteWatch | EarthPulse AI</title>
+    <link rel="stylesheet" href="/css/earthpulse-features.css">
+    <style>
+        .waste-form { max-width: 700px; margin: 35px auto; }
+        .waste-form input, .waste-form select, .waste-form textarea {
+            width: 100%; padding: 12px; margin: 8px 0 18px;
+            border: 1px solid #ccd8d0; border-radius: 9px;
+            box-sizing: border-box; font: inherit;
+        }
+        .waste-form label { font-weight: 600; }
+        .waste-form button {
+            padding: 12px 22px; border: 0; border-radius: 9px;
+            background: #24784c; color: white; cursor: pointer;
+        }
+        #result { margin-top: 16px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<header class="ep-header">
+    <div class="ep-brand">🌍 EarthPulse AI</div>
+    <nav class="ep-nav">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/features">Features</a>
+    </nav>
+</header>
+
+<main class="ep-container">
+    <section class="waste-form ep-card">
+        <h1 class="ep-title">♻️ WasteWatch</h1>
+        <p class="ep-subtitle">
+            Report waste in public areas and help keep your community clean.
+        </p>
+
+        <form id="wasteForm" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <label>Your Name *</label>
+            <input type="text" name="reporterName"
+                   placeholder="Enter your name" required>
+
+            <label>Waste Category *</label>
+            <select name="category" required>
+                <option value="">Select category</option>
+                <option>Plastic Waste</option>
+                <option>Household Waste</option>
+                <option>Construction Waste</option>
+                <option>Electronic Waste</option>
+                <option>Medical Waste</option>
+                <option>Other</option>
+            </select>
+
+            <label>Upload Waste Photo *</label>
+            <input type="file" name="image" id="wasteImage"
+                   accept="image/jpeg,image/png,image/webp" required>
+            <img id="photoPreview" alt="Selected report photo preview" hidden style="max-width:100%;max-height:260px;border-radius:12px;margin:0 0 14px;">
+
+            <label>Location / Address *</label>
+            <input type="text" name="address"
+                   id="address" placeholder="Enter area or address">
+
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+
+            <button type="button" id="locationButton">
+                Use My Current Location
+            </button>
+
+            <p id="locationMessage"></p>
+
+            <label>Description *</label>
+            <textarea name="description" rows="4"
+                      placeholder="Describe the waste location..." required></textarea>
+
+            <button type="submit" id="submitButton">
+                Submit Waste Report
+            </button>
+        </form>
+
+        <p id="result" role="status"></p>
+    </section>
+</main>
+
+<script>
+const form = document.getElementById("wasteForm");
+const result = document.getElementById("result");
+document.getElementById("wasteImage").addEventListener("change", event => {
+ const file=event.target.files[0], preview=document.getElementById("photoPreview");
+ if(file){preview.src=URL.createObjectURL(file);preview.hidden=false;}else{preview.hidden=true;preview.removeAttribute("src");}
+});
+
+document.getElementById("locationButton").addEventListener("click", () => {
+    const message = document.getElementById("locationMessage");
+
+    if (!navigator.geolocation) {
+        message.textContent = "Location is not supported by this browser.";
+        return;
+    }
+
+    message.textContent = "Getting your location...";
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            document.getElementById("latitude").value =
+                position.coords.latitude;
+            document.getElementById("longitude").value =
+                position.coords.longitude;
+
+            message.textContent = "Location added successfully.";
+        },
+        () => {
+            message.textContent =
+                "Could not get location. You can enter the address manually.";
+        }
+    );
+});
+
+form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const address = document.getElementById("address").value.trim();
+    const lat = document.getElementById("latitude").value;
+    const lon = document.getElementById("longitude").value;
+    if (!address && (!lat || !lon)) {
+        result.textContent = "Location is compulsory. Enter an address or use your current location.";
+        document.getElementById("address").focus();
+        return;
+    }
+
+    const button = document.getElementById("submitButton");
+    button.disabled = true;
+    result.textContent = "Submitting your report...";
+
+    try {
+        const response = await fetch("/api/waste-reports", {
+            method: "POST",
+            body: new FormData(form)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Report submission failed.");
+        }
+
+        result.textContent =
+            data.message + " Your Report ID: " + data.reportId;
+
+        form.reset();
+
+    } catch (error) {
+        result.textContent = error.message;
+    } finally {
+        button.disabled = false;
+    }
+});
+</script>
+
+</body>
+</html>
